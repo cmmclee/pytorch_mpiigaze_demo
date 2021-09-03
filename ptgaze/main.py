@@ -6,8 +6,8 @@ import warnings
 import torch
 from omegaconf import DictConfig, OmegaConf
 
-from .demo import Demo
-from .utils import (check_path_all, download_dlib_pretrained_model,
+from demo import Demo
+from utils import (check_path_all, download_dlib_pretrained_model,
                     download_ethxgaze_model, download_mpiifacegaze_model,
                     download_mpiigaze_model, expanduser_all,
                     generate_dummy_camera_params)
@@ -27,6 +27,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         '--mode',
         type=str,
+        default='mpiigaze',
         choices=['mpiigaze', 'mpiifacegaze', 'eth-xgaze'],
         help='With \'mpiigaze\', MPIIGaze model will be used. '
         'With \'mpiifacegaze\', MPIIFaceGaze model will be used. '
@@ -34,7 +35,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         '--face-detector',
         type=str,
-        default='mediapipe',
+        default='dlib',
         choices=[
             'dlib', 'face_alignment_dlib', 'face_alignment_sfd', 'mediapipe'
         ],
@@ -42,6 +43,7 @@ def parse_args() -> argparse.Namespace:
         '(default: \'mediapipe\')')
     parser.add_argument('--device',
                         type=str,
+                        default='cpu',
                         choices=['cpu', 'cuda'],
                         help='Device used for model inference.')
     parser.add_argument('--image',
@@ -60,11 +62,13 @@ def parse_args() -> argparse.Namespace:
         '--output-dir',
         '-o',
         type=str,
+        default='./results',
         help='If specified, the overlaid video will be saved to this directory.'
     )
     parser.add_argument('--ext',
                         '-e',
                         type=str,
+                        default='mp4',
                         choices=['avi', 'mp4'],
                         help='Output video file extension.')
     parser.add_argument(
@@ -153,3 +157,6 @@ def main():
 
     demo = Demo(config)
     demo.run()
+
+if __name__ == '__main__':
+    main()

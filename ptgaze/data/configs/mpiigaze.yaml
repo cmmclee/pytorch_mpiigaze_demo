@@ -4,10 +4,10 @@ model:
   name: resnet_preact
 face_detector:
   mode: dlib
-  dlib_model_path: ~/.ptgaze/dlib/shape_predictor_68_face_landmarks.dat
+  dlib_model_path: ${PACKAGE_ROOT}/model-zoo/shape_predictor_68_face_landmarks.dat
   mediapipe_max_num_faces: 3
 gaze_estimator:
-  checkpoint: ~/.ptgaze/models/mpiigaze_resnet_preact.pth
+  checkpoint: ${PACKAGE_ROOT}/model-zoo/mpiigaze_resnet_preact.pth
   camera_params: ${PACKAGE_ROOT}/data/calib/sample_params.yaml
   use_dummy_camera_params: false
   normalized_camera_params: ${PACKAGE_ROOT}/data/normalized_camera_params/mpiigaze.yaml
